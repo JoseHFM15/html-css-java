@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .calculadora {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 340px;
+        }
+
+        .visor {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-size: 2.5em;
+            min-height: 80px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.4em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: scale(0.95);
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        .numero, .decimal {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .numero:hover, .decimal:hover {
+            background: #e0e0e0;
+        }
+
+        .operador {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .operador:hover {
+            background: #5568d3;
+        }
+
+        .igual {
+            background: #764ba2;
+            color: #fff;
+            grid-column: span 2;
+        }
+
+        .igual:hover {
+            background: #653a8a;
+        }
+
+        .limpar {
+            background: #ff6b6b;
+            color: #fff;
+        }
+
+        .limpar:hover {
+            background: #ee5a52;
+        }
+
+        .apagar {
+            background: #ffa502;
+            color: #fff;
+        }
+
+        .apagar:hover {
+            background: #e69500;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="calculadora">
+            <div class="visor" id="visor">0</div>
+            <div class="botoes">
+                <button class="limpar" onclick="limparVisor()">C</button>
+                <button class="apagar" onclick="apagar()">⌫</button>
+                <button class="operador" data-operador="/" onclick="definirOperacao('/')">/</button>
+                <button class="operador" data-operador="*" onclick="definirOperacao('*')">×</button>
+
+                <button class="numero" onclick="adicionarNumero('7')">7</button>
+                <button class="numero" onclick="adicionarNumero('8')">8</button>
+                <button class="numero" onclick="adicionarNumero('9')">9</button>
+                <button class="operador" data-operador="-" onclick="definirOperacao('-')">-</button>
+
+                <button class="numero" onclick="adicionarNumero('4')">4</button>
+                <button class="numero" onclick="adicionarNumero('5')">5</button>
+                <button class="numero" onclick="adicionarNumero('6')">6</button>
+                <button class="operador"
+                    onclick="definirOperacao('+')">+</button>
+
+                <button class="numero" onclick="adicionarNumero('1')">1</button>
+                <button class="numero" onclick="adicionarNumero('2')">2</button>
+                <button class="numero" onclick="adicionarNumero('3')">3</button>
+                <button class="igual" onclick="calcular()">=</button>
+
+                <button class="numero" onclick="adicionarNumero('0')"
+                    style="grid-column: span 2;">0</button>
+                <button class="decimal" onclick="adicionarDecimal()">.</button>
+            </div>
+        </div>
+
+        <script>
+        let visor = document.getElementById('visor');
+        let valorAtual = '0';
+        let valorAnterior = '';
+        let operacao = null;
+
+        function apagar() {
+
+            console.log(visor.textContent)
+            visor.textContent = visor.textContent.slice(0, visor.textContent.length -1)
+          //  console.log(visor.textContent)
+        }
+
+        function adicionarNumero(num) {
+            if (valorAtual === '0') {
+                valorAtual = num;
+            } else {
+                valorAtual += num;
+            }
+            visor.textContent = valorAtual;
+
+            console.log (valorAtual)
+        }
+
+        function adicionarDecimal() {
+            if (!valorAtual.includes('.')) {
+                valorAtual += '.';
+                visor.textContent = valorAtual;
+            }
+        }
+
+        function definirOperacao(op) {
+            if (operacao !== null) {
+                calcular();
+            }
+            valorAnterior = valorAtual;
+            valorAtual = '0';
+            operacao = op;
+        }
+
+        function calcular() {
+
+                switch (operacao){
+                    
+                    case "+":
+                        let resultado = parseFloat(valorAnterior) + parseFloat(valorAtual);
+                        valorAtual = resultado.toString();
+                        visor.textContent = valorAtual;
+                        operacao = null;
+                        console.log ("adicao")
+
+                        return
+
+                    case "-":
+                        let resultadosubtracao = parseFloat(valorAnterior) - parseFloat(valorAtual);
+                        valorAtual = resultadosubtracao.toString();
+                        visor.textContent = valorAtual;
+                        operacao = null;
+                        console.log ("subtracao")
+
+                        return
+
+                    case "*":
+                        let resultadomultiplicacao = parseFloat(valorAnterior) * parseFloat(valorAtual);
+                        valorAtual = resultadomultiplicacao.toString();
+                        visor.textContent = valorAtual;
+                        operacao = null;
+                        console.log ("multi")
+
+                        return
+
+
+                     case "/":
+                    if (valorAtual !== "0"){
+                        let resultadodivisao = parseFloat(valorAnterior) / parseFloat(valorAtual);
+                        valorAtual = resultadodivisao.toString();
+                        visor.textContent = valorAtual;
+                        operacao = null;
+                        console.log ("divisao")
+
+                        return
+                    }
+                    
+
+                    else {
+
+                        alert ("dividendo igual a zero digite um número válido")
+                    }
+            
+                }    
+        }
+
+        function limparVisor() {
+            valorAtual = '0';
+            valorAnterior = '';
+            operacao = null;
+            visor.textContent = valorAtual;
+        }
+    </script>
+    </body>
+</html>

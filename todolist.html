@@ -1,0 +1,34 @@
+<html> 
+
+<head>
+    
+</head>
+<body>
+    
+
+<h3>Mini To-Do List</h3>
+<input id="todo-input" type="text" placeholder="Digite uma tarefa..." />
+<button id="todo-btn">Adicionar</button>
+<ul id="todo-list"></ul>
+
+</body>
+
+<script> 
+const inputTodo = document.getElementById("todo-input");
+const btnTodo = document.getElementById("todo-btn")
+const listaTodo = document.getElementById("todo-list")
+
+btnTodo.addEventListener("click", function () {
+    const texto = inputTodo.value.trim();
+
+    if (texto === "") { alert("Digite uma tarefa antes de adicionar.");
+        return;
+    }
+    const li = document.createElement("li");
+    li.textContent = texto;
+    listaTodo.appendChild(li);
+    inputTodo.value = ""; 
+    inputTodo.focus();
+});
+</script>
+</html>
