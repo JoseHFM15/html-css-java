@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio do Restaurante</title>
+    <style>
+        /* SEU CSS AQUI - COLE TODO O CSS QUE VOCÊ FORNECEU */
+        /* RESET E CONFIGURAÇÕES BÁSICAS */
+        div{
+            display: block;
+            unicode-bidi: isolate;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* CABEÇALHO */
+        header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* NAVEGAÇÃO DE CATEGORIAS */
+        .categorias {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 30px 20px;
+            background-color: #f8f9fa;
+            flex-wrap: wrap;
+        }
+
+        .btn-categoria {
+            padding: 12px 25px;
+            border: none;
+            background-color: #667eea;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-categoria:hover {
+            background-color: #764ba2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-categoria.ativo {
+            background-color: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        /* CAMPO DE BUSCA */
+        .busca-container {
+            padding: 20px 40px;
+            background-color: #f8f9fa;
+        }
+
+        .busca-container input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .busca-container input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* GRID DE PRODUTOS */
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            background-color: white;
+            width: auto;
+        }
+
+        /* CARD DO PRODUTO */
+        .produto-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .produto-imagem {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+
+        .produto-info {
+            padding: 20px;
+        }
+
+        .produto-nome {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .produto-descricao {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .produto-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .produto-preco {
+            font-size: 1.8em;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .btn-adicionar {
+            padding: 10px 20px;
+            background-color: #51cf66;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-adicionar:hover {
+            background-color: #40c057;
+            transform: scale(1.05);
+        }
+
+        /* CARRINHO FLUTUANTE */
+        .carrinho-flutuante {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .carrinho-flutuante:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5);
+        }
+
+        .contador-carrinho {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #51cf66;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        /* MENSAGEM DE "SEM RESULTADOS" */
+        .sem-resultados {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .produtos {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .categorias {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ Restaurante Delícias</h1>
+            <p>Sabores que encantam seu paladar</p>
+        </header>
+
+        <div class="categorias">
+            <button class="btn-categoria ativo" data-categoria="todos">Todos</button>
+            <button class="btn-categoria" data-categoria="entradas">Entradas</button>
+            <button class="btn-categoria" data-categoria="pratos">Pratos Principais</button>
+            <button class="btn-categoria" data-categoria="sobremesas">Sobremesas</button>
+            <button class="btn-categoria" data-categoria="bebidas">Bebidas</button>
+        </div>
+
+        <div class="busca-container">
+            <input type="text" id="campoBusca" placeholder="🔎 Buscar no cardápio...">
+        </div>
+
+        <div class="produtos" id="listaProdutos">
+            <!-- Os produtos serão carregados dinamicamente via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Carrinho Flutuante -->
+    <div class="carrinho-flutuante" onclick="verCarrinho()">
+        🛒
+        <div class="contador-carrinho" id="contadorCarrinho">0</div>
+    </div>
+
+    <script>
+        // ==========================================
+        // BANCO DE DADOS DE PRODUTOS
+        // ==========================================
+        const produtos = [
+            {
+                id: 1,
+                nome: "Bruschetta",
+                descricao: "Pão italiano com tomate, manjericão e azeite",
+                preco: 18.90,
+                categoria: "entradas",
+                emoji: "🍞"
+            },
+            {
+                id: 2,
+                nome: "Salada Caesar",
+                descricao: "Alface romana, croutons, parmesão e molho especial",
+                preco: 24.90,
+                categoria: "entradas",
+                emoji: "🥗"
+            },
+            {
+                id: 3,
+                nome: "Filé Mignon",
+                descricao: "Filé grelhado com molho de ervas e batatas",
+                preco: 65.00,
+                categoria: "pratos",
+                emoji: "🥩"
+            },
+            {
+                id: 4,
+                nome: "Salmão Grelhado",
+                descricao: "Salmão fresco com legumes e arroz selvagem",
+                preco: 58.00,
+                categoria: "pratos",
+                emoji: "🐟"
+            },
+            {
+                id: 5,
+                nome: "Risoto de Funghi",
+                descricao: "Arroz arbóreo com cogumelos e parmesão",
+                preco: 48.00,
+                categoria: "pratos",
+                emoji: "🍚"
+            },
+            {
+                id: 6,
+                nome: "Tiramisu",
+                descricao: "Sobremesa italiana com café e mascarpone",
+                preco: 22.00,
+                categoria: "sobremesas",
+                emoji: "🍰"
+            },
+            {
+                id: 7,
+                nome: "Petit Gateau",
+                descricao: "Bolo quente de chocolate com sorvete",
+                preco: 26.00,
+                categoria: "sobremesas",
+                emoji: "🧁"
+            },
+            {
+                id: 8,
+                nome: "Suco Natural",
+                descricao: "Sucos frescos de frutas variadas",
+                preco: 12.00,
+                categoria: "bebidas",
+                emoji: "🥤"
+            },
+            {
+                id: 9,
+                nome: "Vinho da Casa",
+                descricao: "Taça de vinho tinto ou branco selecionado",
+                preco: 28.00,
+                categoria: "bebidas",
+                emoji: "🍷"
+            },
+            {
+                id: 10,
+                nome: "Camarão à Milanesa",
+                descricao: "Camarões empanados servidos com molho tártaro",
+                preco: 42.00,
+                categoria: "entradas",
+                emoji: "🍤"
+            }
+        ];
+
+        // ==========================================
+        // VARIÁVEIS GLOBAIS
+        // ==========================================
+        let carrinho = [];
+        let categoriaAtual = "todos";
+
+        // ==========================================
+        // FUNÇÃO PARA EXIBIR PRODUTOS
+        // ==========================================
+        function exibirProdutos(produtosParaExibir) {
+            const listaProdutos = document.getElementById('listaProdutos');
+            
+            // Limpa a lista atual
+            listaProdutos.innerHTML = '';
+            
+            // Verifica se há produtos para exibir
+            if (produtosParaExibir.length === 0) {
+                listaProdutos.innerHTML = '<div class="sem-resultados">😔 Nenhum produto encontrado</div>';
+                return;
+            }
+            
+            // Cria um card para cada produto
+            produtosParaExibir.forEach(produto => {
+                const card = document.createElement('div');
+                card.className = 'produto-card';
+                card.innerHTML = `
+                    <div class="produto-imagem">${produto.emoji}</div>
+                    <div class="produto-info">
+                        <div class="produto-nome">${produto.nome}</div>
+                        <div class="produto-descricao">${produto.descricao}</div>
+                        <div class="produto-footer">
+                            <div class="produto-preco">R$ ${produto.preco.toFixed(2)}</div>
+                            <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                listaProdutos.appendChild(card);
+            });
+        }
+
+        // ==========================================
+        // FUNÇÃO PARA FILTRAR POR CATEGORIA
+        // ==========================================
+        function filtrarPorCategoria(categoria) {
+            categoriaAtual = categoria;
+            
+            // Atualiza os botões ativos
+            const botoes = document.querySelectorAll('.btn-categoria');
+            botoes.forEach(botao => {
+                botao.classList.remove('ativo');
+                if (botao.dataset.categoria === categoria) {
+                    botao.classList.add('ativo');
+                }
+            });
+            
+            // Filtra os produtos
+            let produtosFiltrados;
+            if (categoria === 'todos') {
+                produtosFiltrados = produtos;
+            } else {
+                produtosFiltrados = produtos.filter(p => p.categoria === categoria);
+            }
+            
+            // Aplica a busca atual se houver termo de busca
+            const termoBusca = document.getElementById('campoBusca').value;
+            if (termoBusca) {
+                produtosFiltrados = produtosFiltrados.filter(produto => 
+                    produto.nome.toLowerCase().includes(termoBusca.toLowerCase()) ||
+                    produto.descricao.toLowerCase().includes(termoBusca.toLowerCase())
+                );
+            }
+            
+            // Exibe os produtos filtrados
+            exibirProdutos(produtosFiltrados);
+        }
+
+        // ==========================================
+        // FUNÇÃO DE BUSCA
+        // ==========================================
+        function buscarProdutos(termo) {
+            termo = termo.toLowerCase();
+            
+            let produtosFiltrados;
+            if (categoriaAtual === 'todos') {
+                produtosFiltrados = produtos;
+            } else {
+                produtosFiltrados = produtos.filter(p => p.categoria === categoriaAtual);
+            }
+            
+            produtosFiltrados = produtosFiltrados.filter(produto => {
+                const nomeMatch = produto.nome.toLowerCase().includes(termo);
+                const descricaoMatch = produto.descricao.toLowerCase().includes(termo);
+                
+                return nomeMatch || descricaoMatch;
+            });
+            
+            exibirProdutos(produtosFiltrados);
+        }
+
+        // ==========================================
+        // FUNÇÃO PARA ADICIONAR AO CARRINHO
+        // ==========================================
+        function adicionarAoCarrinho(produtoId) {
+            const produto = produtos.find(p => p.id === produtoId);
+            carrinho.push(produto);
+            
+            // Atualiza o contador do carrinho
+            atualizarContadorCarrinho();
+            
+            // Feedback visual
+            alert(`✅ ${produto.nome} adicionado ao carrinho!`);
+        }
+
+        // ==========================================
+        // FUNÇÃO PARA ATUALIZAR CONTADOR DO CARRINHO
+        // ==========================================
+        function atualizarContadorCarrinho() {
+            const contador = document.getElementById('contadorCarrinho');
+            contador.textContent = carrinho.length;
+        }
+
+        // ==========================================
+        // FUNÇÃO PARA VER O CARRINHO
+        // ==========================================
+        function verCarrinho() {
+            if (carrinho.length === 0) {
+                alert('🛒 Seu carrinho está vazio!');
+                return;
+            }
+            
+            let mensagem = '🛒 SEU CARRINHO:\n\n';
+            let total = 0;
+            
+            carrinho.forEach((produto, index) => {
+                mensagem += `${index + 1}. ${produto.nome} - R$ ${produto.preco.toFixed(2)}\n`;
+                total += produto.preco;
+            });
+            
+            mensagem += `\n💰 TOTAL: R$ ${total.toFixed(2)}`;
+            
+            if (confirm(mensagem + '\n\nDeseja finalizar o pedido?')) {
+                alert('🎉 Pedido realizado com sucesso! Obrigado!');
+                carrinho = [];
+                atualizarContadorCarrinho();
+            }
+        }
+
+        // ==========================================
+        // EVENT LISTENERS (OUVINTES DE EVENTOS)
+        // ==========================================
+        
+        // Adiciona evento de clique em todos os botões de categoria
+        document.querySelectorAll('.btn-categoria').forEach(botao => {
+            botao.addEventListener('click', function() {
+                filtrarPorCategoria(this.dataset.categoria);
+            });
+        });
+        
+        // Adiciona evento de digitação no campo de busca
+        document.getElementById('campoBusca').addEventListener('input', function() {
+            buscarProdutos(this.value);
+        });
+
+        // ==========================================
+        // INICIALIZAÇÃO
+        // ==========================================
+        // Exibe todos os produtos quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            exibirProdutos(produtos);
+            atualizarContadorCarrinho();
+        });
+    </script>
+</body>
+</html>
