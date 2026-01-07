@@ -2,7 +2,7 @@ package br.com.dfcodelab.section.um.missaodominar;
 
 import java.util.Scanner;
 
-public class ex09 {
+public class Ex09 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
@@ -17,3 +17,4 @@ public class ex09 {
         System.out.println("a area do triangulo é: " + area);
     }
 }
+
