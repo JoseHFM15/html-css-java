@@ -2,7 +2,7 @@ package br.com.dfcodelab.section.um.missaodominar;
 
 import java.util.Scanner;
 
-public class ex03 {
+public class Ex03 {
 
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);

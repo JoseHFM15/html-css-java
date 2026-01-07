@@ -2,7 +2,7 @@ package br.com.dfcodelab.section.um.missaodominar;
 
 import java.util.Scanner;
 
-public class ex04 {
+public class Ex04 {
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
         System.out.println("digite o valor do produto: ");

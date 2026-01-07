@@ -4,7 +4,9 @@ package br.com.dfcodelab.section.um.missaodominar;
 
 import java.util.Scanner;
 
-        public class ex06 {
+import static java.lang.Math.*;
+
+public class Ex06 {
             public static void main(String[] args) {
 
 
@@ -16,17 +18,9 @@ import java.util.Scanner;
                 System.out.println("digite o expoente: ");
                 int exp = input.nextInt();
 
-                int resultado = 1;
+                double resultado = (int) pow(base,exp);
 
-                for (int i = 0; i < exp; i++) {
-
-                    resultado *= base;;
-                    System.out.println("o resultado é:" + resultado);
-
-                }
-
-
-
+                System.out.println("o resultado é: " + resultado);
 
 
             }
