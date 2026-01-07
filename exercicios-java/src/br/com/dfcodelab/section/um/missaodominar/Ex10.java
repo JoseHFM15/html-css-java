@@ -19,15 +19,16 @@ public class Ex10 {
 
 
         }
-        if (numeroDeFuncionarios > 0){
+        if (numeroDeFuncionarios <= 0){
 
-            double media =  (salariosTotal / numeroDeFuncionarios);
-            System.out.println("a media do salario dos funcionarios é " + media);
+            System.out.println("nao foi possivel realizar a media!");
+            return;
 
 
         }else {
+            double media =  (salariosTotal / numeroDeFuncionarios);
+            System.out.println("a media do salario dos funcionarios é " + media);
 
-            System.out.println("nao foi possivel realizar a media!");
         }
 
     }
