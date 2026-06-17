@@ -5,7 +5,7 @@ public abstract class Usuario {
     private String nome;
     private String email;
 
-    public Usuario(String email, String nome, long id) {
+    public Usuario(long id , String nome, String email) {
         this.email = email;
         this.nome = nome;
         this.id = id;

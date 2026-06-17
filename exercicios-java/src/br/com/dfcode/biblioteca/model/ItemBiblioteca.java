@@ -1,12 +1,12 @@
 package br.com.dfcode.biblioteca.model;
 
 public abstract class ItemBiblioteca implements Emprestavel{
-    private long id;
+    private Long id;
     private String titulo;
     private int anoPublicacao;
     private boolean disponivel;
 
-    public ItemBiblioteca(String titulo , long id , int anoPublicacao) {
+    public ItemBiblioteca(String titulo , Long id , int anoPublicacao) {
         this.titulo = titulo;
         this.id = id;
         this.anoPublicacao = anoPublicacao;
@@ -30,7 +30,7 @@ public abstract class ItemBiblioteca implements Emprestavel{
         return disponivel;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
