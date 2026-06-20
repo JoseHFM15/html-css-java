@@ -13,7 +13,7 @@ public abstract class Usuario {
 
     public abstract int getLimiteEmprestimos();
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
