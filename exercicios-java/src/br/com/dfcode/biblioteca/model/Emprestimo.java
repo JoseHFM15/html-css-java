@@ -3,6 +3,8 @@ package br.com.dfcode.biblioteca.model;
 import java.time.LocalDate;
 
 public class Emprestimo {
+
+
     private Long id;
     private Usuario usuario;
     private ItemBiblioteca item;
@@ -17,7 +19,8 @@ public class Emprestimo {
         this.dataEmprestimo = LocalDate.now();
         this.status = StatusEmprestimo.ATIVO;
     }
-    public void Devolver(){
+
+    public void Devolver() {
         this.dataDevolucao = LocalDate.now();
         this.status = StatusEmprestimo.DEVOLVIDO;
         this.item.devolver();
@@ -38,4 +41,6 @@ public class Emprestimo {
     public StatusEmprestimo getStatus() {
         return status;
     }
+
+
 }

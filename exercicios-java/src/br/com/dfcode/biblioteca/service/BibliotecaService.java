@@ -12,6 +12,7 @@ import br.com.dfcode.biblioteca.repository.ItemRepository;
 import br.com.dfcode.biblioteca.repository.UsuarioRepository;
 
 public class BibliotecaService {
+    private static Long contadorId;
     private ItemRepository itemRepository;
     private UsuarioRepository usuarioRepository;
     private EmprestimoRepository emprestimoRepository;
@@ -32,6 +33,11 @@ public class BibliotecaService {
         item.emprestar();
         Emprestimo emprestimo = new Emprestimo(gerarId(), usuario, item);
         emprestimoRepository.salvar(emprestimo);
+    }
+
+    public Long gerarId(){
+        contadorId++;
+        return contadorId;
     }
 
 }

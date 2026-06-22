@@ -2,6 +2,7 @@ package br.com.dfcode.biblioteca.repository;
 
 import br.com.dfcode.biblioteca.model.Emprestimo;
 import br.com.dfcode.biblioteca.model.ItemBiblioteca;
+import br.com.dfcode.biblioteca.model.StatusEmprestimo;
 import br.com.dfcode.biblioteca.model.Usuario;
 
 import java.util.ArrayList;
@@ -31,8 +32,13 @@ public class EmprestimoRepository {
         int contador = 0;
 
         for (Emprestimo emp : this.emprestimos){
-            if (emp.getUsuario().getId() == id && emp.)
-        }
+            if (emp.getUsuario().getId() == id && emp.getStatus() == StatusEmprestimo.ATIVO){
+                contador++;
+            }
 
+        }
+        return contador;
     }
+
+   
 }
