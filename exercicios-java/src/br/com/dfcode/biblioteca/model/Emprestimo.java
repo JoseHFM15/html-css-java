@@ -20,6 +20,12 @@ public class Emprestimo {
         this.status = StatusEmprestimo.ATIVO;
     }
 
+    public void Emprestar() {
+        this.dataDevolucao = LocalDate.now();
+        this.status = StatusEmprestimo.INDISPONIVEL;
+        this.item.emprestar();
+    }
+
     public void Devolver() {
         this.dataDevolucao = LocalDate.now();
         this.status = StatusEmprestimo.DEVOLVIDO;

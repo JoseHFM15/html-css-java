@@ -1,6 +1,9 @@
 package br.com.dfcode.biblioteca.model;
 
+import static br.com.dfcode.biblioteca.service.BibliotecaService.contadorId;
+
 public abstract class ItemBiblioteca implements Emprestavel{
+    private static Long contadorId;
     private Long id;
     private String titulo;
     private int anoPublicacao;
@@ -40,5 +43,10 @@ public abstract class ItemBiblioteca implements Emprestavel{
 
     public int getAnoPublicacao() {
         return anoPublicacao;
+    }
+
+    public Long gerarId(){
+        contadorId++;
+        return contadorId;
     }
 }

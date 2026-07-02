@@ -1,8 +1,11 @@
 package br.com.dfcode.biblioteca;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.Scanner;
 
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int opcao = 1;
         while (opcao != 0) {
 
@@ -19,6 +22,14 @@ public class Main {
             System.out.println("9 - Listar emprestimos ativos");
             System.out.println("10 - Gerar relatorio");
             System.out.println("0 - sair");
+
+            System.out.println("Digite alguma das opções acima:");
+            opcao = sc.nextInt();
+
+            switch (opcao){
+                case 1:
+
+            }
         }
     }
 
